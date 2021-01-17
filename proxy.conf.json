@@ -1,0 +1,13 @@
+{
+  "/auth": {
+    "target": "http://interview.agileengine.com",
+    "secure": false,
+    "changeOrigin": true
+  },
+  "/images": {
+    "target": "http://interview.agileengine.com",
+    "secure": false,
+    "changeOrigin": true
+  }
+
+}

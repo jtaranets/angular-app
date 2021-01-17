@@ -1,0 +1,14 @@
+<div class="gallery-container" *ngIf="images$ | async as images; else error">
+  <img *ngFor="let image of images"
+       (click)="openPopup(image.id)"
+       [src]="image.cropped_picture"
+       alt="cropped-image">
+  <div class="load-more" *ngIf="canLoadMore$ | async"
+       (click)="loadMore()">
+    Load more
+  </div>
+</div>
+<ng-template #error>
+  <p>Couldn't retrieve images, try later</p>
+</ng-template>
+<router-outlet></router-outlet>

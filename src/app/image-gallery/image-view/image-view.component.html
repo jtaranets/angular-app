@@ -1,0 +1,22 @@
+<div class="modal-overlay" *ngIf="image$ | async as image">
+  <div class="modal"
+       #modal>
+    <img #modalImage
+         [src]="image.full_picture">
+    <div class="overlay">
+      <div class="movable-area" (mousedown)="startMovingImage($event)">
+        <p>{{image.author}}</p>
+        <p>{{image.camera}}</p>
+        <p>{{image.tags}}</p>
+        <button (click)="copyLink()">Share</button>
+      </div>
+    </div>
+    <div class="btn-holder">
+      <div *ngIf=" currentImageIndex !== 0" class="navigation-btn" (click)="previousClick($event)">Previous</div>
+      <div *ngIf="currentImageIndex !== imageGalleryService.allImages.length - 1" class="navigation-btn" (click)="nextClick($event)">Next
+      </div>
+    </div>
+  </div>
+</div>
+
+
