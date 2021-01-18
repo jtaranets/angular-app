@@ -11,7 +11,7 @@ import { AuthService } from './auth.service';
 })
 export class ImageGalleryService {
 
-  private imagesResponse$: BehaviorSubject<ImageResponse> = new BehaviorSubject({} as ImageResponse);
+  private imagesResponse$: BehaviorSubject<ImageResponse> = new BehaviorSubject({pictures: []} as ImageResponse);
   allImages: string[] = [];
 
   constructor(private http: HttpClient,
@@ -28,8 +28,9 @@ export class ImageGalleryService {
       ...(page && { params: { page } })
     })
       .pipe(tap(r => {
-          this.imagesResponse$.next(r);
-          this.allImages = r.pictures.map(p => p.id);
+          const currentValue = this.imagesResponse$.getValue();
+          this.imagesResponse$.next({ ...r, pictures: [...currentValue.pictures, ...r.pictures] });
+          this.allImages = [...this.allImages, ...r.pictures.map(p => p.id)];
         }),
         catchError((err) => this.handleError(err, (newToken) => this.getImageResponse(newToken, page))));
   }
